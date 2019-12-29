@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <form method="POST" action="LoginServlet">
+        <form method="GET" action="LoginServlet">
             Username <input type="text" name="username">
             Password <input type="password" name="password">
             <input type="submit">
