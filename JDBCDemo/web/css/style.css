@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 29, 2019, 10:39:38 PM
+    Author     : Win_It
+*/
+
+.frm{
+    font-family: serif;
+    font-size: 20px;
+    color: #1C1C1C;
+}
+
+#title{
+    font-family: serif;
+    font-size: 40px;
+    color: #1C1C1C;
+}
+
+#link{
+    font-family: monospace;
+    font-size: 18px;
+    color: #1C1C1C;
+}
+
+#link:hover {
+    font-size: 20px;
+    color: blue;
+}
+

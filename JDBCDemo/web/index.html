@@ -9,13 +9,17 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <h1>Hello World!! </h1>
-        <form action="LoginServlet" method="GET">
-            Name : <input type="text" name="uname" placeholder="Username">
-            Password : <input type="password" name="pass" placeholder="Password">
-            <input type="submit" value="login">
-        </form>
+        <p id="title">Hello World!!</p>
+        <div class="frm">
+            <form action="LoginServlet" method="POST">
+                Name : <input type="text" name="uname" placeholder="Username">
+                Password : <input type="password" name="pass" placeholder="Password">
+                <input type="submit" value="login">
+            </form>
+        </div>
+        <p id="link"><a href="signup.html">Sign Up</a></p>
     </body>
 </html>

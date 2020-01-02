@@ -16,6 +16,8 @@ class MyClass {
             //     String myQuery = "INSERT INTO tab VALUES("+ i + ", Vinit" + i + " )";
             //     stm.executeQuery(myQuery);
             // }   
+            
+            stm.executeUpdate("INSERT INTO tab VALUES('3', 'Vinit3')");
 
             ResultSet rs = stm.executeQuery("select * from tab");
 
@@ -24,6 +26,7 @@ class MyClass {
                 String str = rs.getString("name");
                 System.out.println("id : " + n + " name : " + str);
             }   
+
 
             conn.close();
             

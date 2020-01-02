@@ -4,3 +4,7 @@
 /JDBCDemo/nbproject/private/
 /JDBCDemo/build/
 /JDBCDemo/dist/
+/*.class
+/WebApplication3/nbproject/private/
+/WebApplication3/build/
+/WebApplication3/dist/
