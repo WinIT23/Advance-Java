@@ -7,7 +7,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
+;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Win_It
  */
+
+
 public class SignupServlet extends HttpServlet {
 
     /**
@@ -35,36 +37,30 @@ public class SignupServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-        String uname = request.getParameter("uname");
-        String passwd = request.getParameter("pass");
-        
-        if(!passwd.equals(request.getParameter("cpass"))){
-            request.getRequestDispatcher("signup.jsp").forward(request, response);
-        } else {
+
+            String uname = request.getParameter("uname");
+            String passwd = request.getParameter("pass");
+
             //Add data to mysql
-            try{
-                Connection myCon = (Connection) getServletContext().getAttribute("dBConnection");
-                PreparedStatement myPst = myCon.prepareStatement("INSERT INTO tab VALUES(?, ?);");
-                
+            try {
+                PreparedStatement myPst = ((Connection) getServletContext().getAttribute("dBConnection")).prepareStatement("INSERT INTO tab VALUES(?, ?);");
+
                 myPst.setString(1, uname);
                 myPst.setString(2, passwd);
-                
+
                 int i = myPst.executeUpdate();
-                
-                if(i != 0) {
+
+                if (i != 0) {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
-                }else {
+                } else {
                     request.getRequestDispatcher("signup.jsp").forward(request, response);
                 }
-                
-            }catch(IOException | SQLException | ServletException ex) {
+
+            } catch (IOException | SQLException | ServletException ex) {
                 out.println("<p id=\"error\">");
                 ex.printStackTrace(new java.io.PrintWriter(out));
                 out.println("</div>");
             }
-        }
-            
         }
     }
 

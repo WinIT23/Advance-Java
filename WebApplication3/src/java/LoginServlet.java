@@ -35,16 +35,17 @@ public class LoginServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
 
             String uname = request.getParameter("username");
-            String s2 = request.getParameter("password");
+            String pass = request.getParameter("password");
             User user = new User();
-            user.setFrmData(uname, s2);
+            user.setFrmData(uname, pass);
             
             try {
                 Connection myCon = (Connection)getServletContext().getAttribute("dBConnection");
                 
-                PreparedStatement myPst = myCon.prepareStatement("SELECT * FROM tab WHERE uname=?");
+                PreparedStatement myPst = myCon.prepareStatement("SELECT * FROM tab WHERE uname=? and passwd=?");
 
                 myPst.setString(1, uname);
+                myPst.setString(2, pass);
 
                 ResultSet rs;
                 rs = myPst.executeQuery();
@@ -61,11 +62,10 @@ public class LoginServlet extends HttpServlet {
                     } 
                 }
                 if(!hasUser){
-                        
-                        String err = "Invalid Password";
-                        request.setAttribute("passwd_msg", err);
-                    
-                        request.getRequestDispatcher("index.jsp").forward(request, response);
+                        String err = "Invalid Username or Password";
+                        getServletContext().setAttribute("passwd_msg", err);
+                        response.sendRedirect("index.jsp");
+                        //request.getRequestDispatcher("index.jsp").include(request, response);
                     }
 
             } catch (IOException | SQLException | ServletException ex) {

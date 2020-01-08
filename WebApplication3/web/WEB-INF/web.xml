@@ -13,7 +13,7 @@
         <param-value>jdbc:mysql://localhost:3306/mydb?autoReconnect=true&amp;useSSL=false</param-value>
     </context-param>
     <servlet>
-        <servlet-name>NewServlet</servlet-name>
+        <servlet-name>LoginServlet</servlet-name>
         <servlet-class>LoginServlet</servlet-class>
     </servlet>
     <servlet>
@@ -21,8 +21,8 @@
         <servlet-class>SignupServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>NewServlet</servlet-name>
-        <url-pattern>/NewServlet</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SignupServlet</servlet-name>
