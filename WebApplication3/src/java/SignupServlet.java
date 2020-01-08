@@ -7,7 +7,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-;
+import model.MyConnection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -35,6 +35,7 @@ public class SignupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
@@ -43,7 +44,14 @@ public class SignupServlet extends HttpServlet {
 
             //Add data to mysql
             try {
-                PreparedStatement myPst = ((Connection) getServletContext().getAttribute("dBConnection")).prepareStatement("INSERT INTO tab VALUES(?, ?);");
+                
+                String dBUrl = getServletContext().getInitParameter("db_url");
+                String dBUame = getServletContext().getInitParameter("db_name");
+                String dBPass = getServletContext().getInitParameter("db_pass");
+                
+                MyConnection myCon = new MyConnection(dBUrl, dBUame, dBPass, uname, passwd);
+                
+                PreparedStatement myPst = myCon.getConnection().prepareStatement("INSERT INTO tab VALUES(?, ?);");
 
                 myPst.setString(1, uname);
                 myPst.setString(2, passwd);
@@ -53,10 +61,10 @@ public class SignupServlet extends HttpServlet {
                 if (i != 0) {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("signup.jsp").forward(request, response);
+                    response.sendRedirect("signup.jsp");
                 }
 
-            } catch (IOException | SQLException | ServletException ex) {
+            } catch (Exception ex) {
                 out.println("<p id=\"error\">");
                 ex.printStackTrace(new java.io.PrintWriter(out));
                 out.println("</div>");

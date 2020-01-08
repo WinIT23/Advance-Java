@@ -15,15 +15,6 @@
     <body>
         <h1>Hello World!</h1>
 
-        <%
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = getServletContext().getInitParameter("db_url");
-            String name = getServletContext().getInitParameter("db_name");
-            String pass = getServletContext().getInitParameter("db_pass");
-            java.sql.Connection myCon = java.sql.DriverManager.getConnection(url, name, pass);
-            getServletContext().setAttribute("dBConnection", myCon);
-        %>
-
         <form action="LoginServlet" method="GET"> 
             <p>Username : <input type="text" name="username">
             Password : <input type="password" name="password"><br></p>

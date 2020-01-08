@@ -19,7 +19,7 @@
             <p>Enter Password : <input type="password" name="pass"> </p>
             <p>Re-Enter Password : <input type="password" name="cpass"> </p>
             <p id="err"></p>
-            <input type="submit">
+            <button type="submit">Sign Up</button>
         </form>
         <script>
         function passCheck(form) {
@@ -28,13 +28,11 @@
             
             if (passwd !== cpasswd) {
                 err.innerHTML = "Password Dosen't match";
-                
-                //err.style.color = "#ff0000";
                 passwd.value = "";
                 cpasswd.value = "";
-
-                //alert("We don't do that here...");
-             
+                return false;
+            } else if(passwd === "" || form.uname.value === ""){
+                err.innerHTML = "Enter some values \"Dumbass\"";
                 return false;
             } else {
                 return true;

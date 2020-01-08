@@ -7,11 +7,13 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
+import model.MyConnection;
 
 /**
  *
@@ -36,13 +38,16 @@ public class LoginServlet extends HttpServlet {
 
             String uname = request.getParameter("username");
             String pass = request.getParameter("password");
-            User user = new User();
-            user.setFrmData(uname, pass);
             
             try {
-                Connection myCon = (Connection)getServletContext().getAttribute("dBConnection");
                 
-                PreparedStatement myPst = myCon.prepareStatement("SELECT * FROM tab WHERE uname=? and passwd=?");
+                String dBUrl = getServletContext().getInitParameter("db_url");
+                String dBUame = getServletContext().getInitParameter("db_name");
+                String dBPass = getServletContext().getInitParameter("db_pass");
+                
+                MyConnection myCon = new MyConnection(dBUrl, dBUame, dBPass, uname, pass);
+                
+                PreparedStatement myPst = myCon.getConnection().prepareStatement("SELECT * FROM tab WHERE uname=? and passwd=?");
 
                 myPst.setString(1, uname);
                 myPst.setString(2, pass);
@@ -54,9 +59,9 @@ public class LoginServlet extends HttpServlet {
                 
                 boolean hasUser = false;
                 while (rs.next()) {
-                    user.setDBData(rs.getString("uname"), rs.getString("passwd"));
+                    myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"));
                     
-                    if (user.passCheck()) {
+                    if (myCon.getUserInstance().passCheck()) {
                         request.getRequestDispatcher("welcome.jsp").forward(request, response);
                         hasUser = true;
                     } 
@@ -67,11 +72,13 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("index.jsp");
                         //request.getRequestDispatcher("index.jsp").include(request, response);
                     }
-
+                myCon.closeConnction();
             } catch (IOException | SQLException | ServletException ex) {
                 out.println("<p id=\"error\">");
                 ex.printStackTrace(new java.io.PrintWriter(out));
                 out.println("</div>");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
