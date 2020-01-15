@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<db_info>
+    <url>jdbc:mysql://localhost:3306/mydb?autoReconnect=true&amp;useSSL=false</url>
+    <name>root</name>
+    <passwd>12345</passwd>
+</db_info>

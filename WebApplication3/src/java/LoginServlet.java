@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.MyConnection;
 
 /**
@@ -55,13 +56,14 @@ public class LoginServlet extends HttpServlet {
                 ResultSet rs;
                 rs = myPst.executeQuery();
                 
-                request.setAttribute("user_name", uname);
-                
                 boolean hasUser = false;
                 while (rs.next()) {
                     myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"));
                     
                     if (myCon.getUserInstance().passCheck()) {
+                        // Creating Session...
+                        HttpSession s = request.getSession();
+                        s.setAttribute("user_name", uname);
                         request.getRequestDispatcher("welcome.jsp").forward(request, response);
                         hasUser = true;
                     } 

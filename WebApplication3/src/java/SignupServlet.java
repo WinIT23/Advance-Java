@@ -6,7 +6,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import model.MyConnection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -41,7 +40,7 @@ public class SignupServlet extends HttpServlet {
 
             String uname = request.getParameter("uname");
             String passwd = request.getParameter("pass");
-
+            
             //Add data to mysql
             try {
                 
@@ -59,12 +58,12 @@ public class SignupServlet extends HttpServlet {
                 int i = myPst.executeUpdate();
 
                 if (i != 0) {
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    request.getRequestDispatcher("index.jsp").include(request, response);
                 } else {
                     response.sendRedirect("signup.jsp");
                 }
 
-            } catch (Exception ex) {
+            } catch (IOException | ClassNotFoundException | SQLException | ServletException ex) {
                 out.println("<p id=\"error\">");
                 ex.printStackTrace(new java.io.PrintWriter(out));
                 out.println("</div>");
