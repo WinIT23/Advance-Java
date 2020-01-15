@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    HttpSession mySession = request.getSession();
+    HttpSession mySession = request.getSession(false);
     if(mySession.isNew() || mySession.getAttribute("login") == null){
             response.sendRedirect("hackerman.jsp");
     } else {

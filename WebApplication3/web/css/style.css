@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Win_It
 */
 
-*{
+body {
     font-family: monospace;
     background-color: #1C1C1C;
     color: #FCFCFC;
@@ -41,4 +41,15 @@ a{
 a:hover {
     color: tomato;
     font-size: 20px;
+}
+
+#hackerman {
+    background-image: url("../res/hackerman.jpg");
+    /*background-position: center;*/ 
+    background-size: cover;
+    background-repeat: no-repeat; 
+}
+
+#hackerman p {
+    font-size: 48px;
 }

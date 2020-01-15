@@ -12,8 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
-        <p style="font-size: 32px">If you are not, Then don't be ...</p>
-        <img src="res/hackerman.jpg">
+    <body id="hackerman">
+            <p>If you are not, Then don't be ...</p>
     </body>
 </html>
