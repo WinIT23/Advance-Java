@@ -42,6 +42,10 @@ public class LoginServlet extends HttpServlet {
             
             try {
                 
+            // Creating Session...
+                HttpSession s = request.getSession();
+                s.setAttribute("login", Boolean.FALSE);
+                
                 String dBUrl = getServletContext().getInitParameter("db_url");
                 String dBUame = getServletContext().getInitParameter("db_name");
                 String dBPass = getServletContext().getInitParameter("db_pass");
@@ -61,10 +65,9 @@ public class LoginServlet extends HttpServlet {
                     myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"));
                     
                     if (myCon.getUserInstance().passCheck()) {
-                        // Creating Session...
-                        HttpSession s = request.getSession();
                         s.setAttribute("user_name", uname);
-                        request.getRequestDispatcher("welcome.jsp").forward(request, response);
+                        s.setAttribute("login", Boolean.TRUE);
+                        request.getRequestDispatcher("welcome.jsp").include(request, response);
                         hasUser = true;
                     } 
                 }

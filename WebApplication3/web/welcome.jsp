@@ -7,11 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    HttpSession mySession = request.getSession(false);
-    if(mySession == null) {    
-        response.sendRedirect("hackerman.jsp");
+    HttpSession mySession = request.getSession();
+    if(mySession.isNew() || mySession.getAttribute("login") == null){
+            response.sendRedirect("hackerman.jsp");
     } else {
         out.println("<p>" + mySession.getId() + "</p>");
+        out.println("<p>" + mySession.getAttribute("login") + "</p>");
     }
     
 //    HttpSession s = request.getSession();
@@ -33,7 +34,7 @@
                     out.println(uname);
                 } else {
             // <---------- I think (Most Probably) it is "Paatiya Method" ------------->
-                    response.sendRedirect("hackerman.jsp");
+                    //response.sendRedirect("hackerman.jsp");
                 }
             %></h1>
             <a href="logout.jsp">Log Out</a>
