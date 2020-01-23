@@ -1,3 +1,5 @@
+package com.example.web;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,21 +8,21 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.example.model.MyConnection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.MyConnection;
 
 /**
  *
  * @author Win_It
  */
-public class LoginServlet extends HttpServlet {
+
+
+public class SignupServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,45 +36,34 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
-            String uname = request.getParameter("username");
-            String pass = request.getParameter("password");
-            
+            String uname = request.getParameter("uname");
+            String passwd = request.getParameter("pass");
+
+            //Add data to mysql
             try {
                 
-                HttpSession s = request.getSession();
-                s.setAttribute("login", Boolean.FALSE);
-                
                 MyConnection myCon = (MyConnection) getServletContext().getAttribute("my_con");
-                myCon.getUserInstance().setFrmData(uname, pass);
-                PreparedStatement myPst = myCon.getConnection().prepareStatement("SELECT * FROM tab WHERE uname=? and passwd=?");
-                
-                myPst.setString(1, uname);
-                myPst.setString(2, pass);
+                PreparedStatement myPst = myCon.getConnection().prepareStatement("INSERT INTO tab VALUES(?, ?);");
 
-                ResultSet rs;
-                rs = myPst.executeQuery();
-                
-                boolean hasUser = false;
-                while (rs.next()) {
-                    myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"));
-                    
-                    if (myCon.getUserInstance().passCheck()) {
-                        s.setAttribute("user_name", uname);
-                        request.getRequestDispatcher("welcome.jsp").forward(request, response);
-                        hasUser = true;
-                    } 
+                myPst.setString(1, uname);
+                myPst.setString(2, passwd);
+
+                int i = myPst.executeUpdate();
+
+                if (i != 0) {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("signup.jsp");
                 }
-                if(!hasUser){
-                        String err = "Invalid Username or Password";
-                        getServletContext().setAttribute("passwd_msg", err);
-                        response.sendRedirect("index.jsp");
-                        //request.getRequestDispatcher("index.jsp").include(request, response);
-                    }
-            } catch (IOException | SQLException | ServletException | ClassNotFoundException ex) {
-                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+
+            } catch (IOException | ClassNotFoundException | SQLException | ServletException ex) {
+                out.println("<p id=\"error\">");
+                ex.printStackTrace(new java.io.PrintWriter(out));
+                out.println("</div>");
             }
         }
     }

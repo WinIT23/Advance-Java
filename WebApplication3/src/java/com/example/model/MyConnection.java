@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package com.example.model;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,10 +12,10 @@ import java.sql.SQLException;
  * @author Win_It
  */
 public class MyConnection { 
-    private String dBUrl;
-    private String dBUname;
-    private String dBPass;
-    private User user;
+    private final String dBUrl;
+    private final String dBUname;
+    private final String dBPass;
+    private final User user;
     private Connection myConnection;
  
     //get data from servlet by using constructor..
