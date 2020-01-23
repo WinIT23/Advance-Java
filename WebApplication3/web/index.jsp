@@ -15,7 +15,7 @@
     <body>
         <h1>Hello World!</h1>
 
-        <form action="LoginServlet" method="GET"> 
+        <form action="LoginServlet" method="POST"> 
             <p>Username : <input type="text" name="username">
             Password : <input type="password" name="password"><br></p>
             <p id="err"><%
