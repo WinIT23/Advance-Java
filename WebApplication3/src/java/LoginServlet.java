@@ -55,13 +55,12 @@ public class LoginServlet extends HttpServlet {
                 ResultSet rs;
                 rs = myPst.executeQuery();
                 
-                request.setAttribute("user_name", uname);
-                
                 boolean hasUser = false;
                 while (rs.next()) {
                     myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"));
                     
                     if (myCon.getUserInstance().passCheck()) {
+                        s.setAttribute("user_name", uname);
                         request.getRequestDispatcher("welcome.jsp").forward(request, response);
                         hasUser = true;
                     } 

@@ -13,7 +13,7 @@
         <param-value>jdbc:mysql://localhost:3306/mydb?autoReconnect=true&amp;useSSL=false</param-value>
     </context-param>
     <listener>
-        <listener-class>ServletContextListener</listener-class>
+        <listener-class>StartupContextListener</listener-class>
     </listener>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
