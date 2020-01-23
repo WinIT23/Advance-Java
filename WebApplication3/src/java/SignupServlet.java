@@ -6,6 +6,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import model.MyConnection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -40,16 +41,11 @@ public class SignupServlet extends HttpServlet {
 
             String uname = request.getParameter("uname");
             String passwd = request.getParameter("pass");
-            
+
             //Add data to mysql
             try {
                 
-                String dBUrl = getServletContext().getInitParameter("db_url");
-                String dBUame = getServletContext().getInitParameter("db_name");
-                String dBPass = getServletContext().getInitParameter("db_pass");
-                
-                MyConnection myCon = new MyConnection(dBUrl, dBUame, dBPass, uname, passwd);
-                
+                MyConnection myCon = (MyConnection) getServletContext().getAttribute("my_con");
                 PreparedStatement myPst = myCon.getConnection().prepareStatement("INSERT INTO tab VALUES(?, ?);");
 
                 myPst.setString(1, uname);
@@ -58,12 +54,12 @@ public class SignupServlet extends HttpServlet {
                 int i = myPst.executeUpdate();
 
                 if (i != 0) {
-                    request.getRequestDispatcher("index.jsp").include(request, response);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("signup.jsp");
                 }
 
-            } catch (IOException | ClassNotFoundException | SQLException | ServletException ex) {
+            } catch (Exception ex) {
                 out.println("<p id=\"error\">");
                 ex.printStackTrace(new java.io.PrintWriter(out));
                 out.println("</div>");

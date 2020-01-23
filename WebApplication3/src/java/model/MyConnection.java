@@ -12,23 +12,21 @@ import java.sql.SQLException;
  * @author Win_It
  */
 public class MyConnection { 
-    private final String dBUrl;
-    private final String dBUname;
-    private final String dBPass;
-    private final User user;
+    private String dBUrl;
+    private String dBUname;
+    private String dBPass;
+    private User user;
     private Connection myConnection;
  
     //get data from servlet by using constructor..
-    public MyConnection(String dBUrl, String dBUname, String dBPass, String myUname, String myPass) {
+    public MyConnection(String dBUrl, String dBUname, String dBPass) {
         this.user = new User();
-        this.user.setFrmData(myUname, myPass);
         this.dBUrl = dBUrl;
         this.dBUname = dBUname;
         this.dBPass = dBPass;
     }
     //check if url uname and passwd is pointing to null 
     // if so than read from personal config file...
-    
     
     private Connection makeConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
