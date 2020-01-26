@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.example.model.MyConnection;
+import javax.servlet.http.Cookie;
 
 /**
  *
@@ -41,9 +42,22 @@ public class LoginServlet extends HttpServlet {
 
             String uname = request.getParameter("username");
             String pass = request.getParameter("password");
+            String rMe = request.getParameter("remember"); // for check box of remember me...
+            // if checked response.addCookie( for uname and pass);
             
-            try {
+            if(rMe != null) {
+                // Username Cookie
+                Cookie cName = new Cookie("c_uname", uname);
+                cName.setMaxAge(Integer.MAX_VALUE);
+                response.addCookie(cName);
                 
+                // Password Cookie
+                Cookie cPass = new Cookie("c_pass", pass);
+                cPass.setMaxAge(Integer.MAX_VALUE);
+                response.addCookie(cPass);
+            }
+            
+            try {    
                 HttpSession s = request.getSession();
                 s.setAttribute("login", Boolean.FALSE);
                 
