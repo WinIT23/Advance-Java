@@ -41,8 +41,8 @@ public class MyConnection {
         return this.myConnection;
     }
     
-    public void closeConnction() throws SQLException {
-        this.myConnection.close();
+    public void closeConnction() throws SQLException, NullPointerException {
+            this.myConnection.close();
     }
     
     public User getUserInstance() {

@@ -45,6 +45,13 @@
                 %></p> 
             <p><input type = "checkbox" name = "remember" value="checked"/> Remember Me!!! </p> 
             <button type="submit">Login</button> <a href="signup.jsp">Sign Up</a>
+            
+            <%
+                response.setHeader("Pragma", "no-cache");
+                response.setHeader("Cache-Control", "no-store");
+                response.setHeader("Expiires", "0");
+                response.setDateHeader("Expires", -1);
+            %>
         </form>
     </body>
 </html>

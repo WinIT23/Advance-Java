@@ -77,6 +77,7 @@ public class LoginServlet extends HttpServlet {
                     
                     if (myCon.getUserInstance().passCheck()) {
                         s.setAttribute("user_name", uname);
+                        s.setAttribute("login", Boolean.TRUE);
                         request.getRequestDispatcher("welcome.jsp").forward(request, response);
                         hasUser = true;
                     } 

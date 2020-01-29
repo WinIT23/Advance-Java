@@ -40,7 +40,7 @@ public class StartupContextListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
         try {
             myConn.closeConnction(); 
-        } catch (SQLException ex) {
+        } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(StartupContextListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

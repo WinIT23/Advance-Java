@@ -8,12 +8,12 @@
 <!DOCTYPE html>
 <%
     HttpSession mySession = request.getSession(false);
-    if(mySession.isNew() || mySession.getAttribute("login") == null){
-            response.sendRedirect("hackerman.jsp");
-    } else {
-        out.println("<p>" + mySession.getId() + "</p>");
-        out.println("<p>" + mySession.getAttribute("login") + "</p>");
-    }
+//    if(mySession.isNew() || (mySession.getAttribute("login") == null | false)){
+//            response.sendRedirect("hackerman.jsp");
+//    } else {
+//        out.println("<p>" + mySession.getId() + "</p>");
+//        out.println("<p>" + mySession.getAttribute("login") + "</p>");
+//    }
     
 //    HttpSession s = request.getSession();
 //    if(s.isNew()) {
