@@ -25,6 +25,10 @@ import javax.servlet.http.Cookie;
  */
 public class LoginServlet extends HttpServlet {
 
+    private MyConnection myCon;
+    private String tabName;
+    private PreparedStatement myPst;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,23 +65,25 @@ public class LoginServlet extends HttpServlet {
                 HttpSession s = request.getSession();
                 s.setAttribute("login", Boolean.FALSE);
                 
-                MyConnection myCon = (MyConnection) getServletContext().getAttribute("my_con");
+                // set data from userinput to user-Object
                 myCon.getUserInstance().setFrmData(uname, pass);
-                PreparedStatement myPst = myCon.getConnection().prepareStatement("SELECT * FROM tab WHERE uname=? and passwd=?");
                 
+                // set values for arguments in quary
                 myPst.setString(1, uname);
                 myPst.setString(2, pass);
 
-                ResultSet rs;
-                rs = myPst.executeQuery();
+                // Execute Quary and store result-set
+                ResultSet rs = myPst.executeQuery();
                 
                 boolean hasUser = false;
                 while (rs.next()) {
-                    myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"));
+                    myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"), rs.getString("status"));
                     
                     if (myCon.getUserInstance().passCheck()) {
-                        s.setAttribute("user_name", uname);
+                        getServletContext().setAttribute("user_name", uname);
                         s.setAttribute("login", Boolean.TRUE);
+                        // set active in database....
+                        myCon.setStatus("A");
                         request.getRequestDispatcher("welcome.jsp").forward(request, response);
                         hasUser = true;
                     } 
@@ -88,7 +94,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("index.jsp");
                         //request.getRequestDispatcher("index.jsp").include(request, response);
                     }
-            } catch (IOException | SQLException | ServletException | ClassNotFoundException ex) {
+            } catch (IOException | SQLException | ServletException ex) {
                 Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -132,5 +138,16 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    @Override
+    public void init() throws ServletException {
+        myCon = (MyConnection) getServletContext().getAttribute("my_con");
+        tabName = getServletContext().getInitParameter("tab_name");
+        try {
+            myPst = myCon.getConnection().prepareStatement("SELECT * FROM " + tabName + " WHERE uname=? and passwd=?");
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+    }
 }

@@ -16,6 +16,7 @@ public class User {
     private String mFormPasswd;
     private String mDBUsername;
     private String mDBPasswd;
+    private boolean mStatus;
 
     /**
      *
@@ -46,17 +47,24 @@ public class User {
         return mDBUsername.equals(mFormUsername);
     }
 
-//    public Connection getConnction(String url, String name, String pass) throws ClassNotFoundException, SQLException {
-//        Class.forName("com.mysql.cj.jdbc.Driver");
-//        Connection myCon = DriverManager.getConnection(url, name, pass);
-//        return myCon;
-//    }
-    
-    public void setDBData(String uname, String pass) {
+    public void setDBData(String uname, String pass, String status) {
         this.mDBUsername = uname;
         this.mDBPasswd = pass;
+        this.mStatus = status.equals("A");
     }
 
+    public String getName() {
+        return this.mDBUsername;
+    }
+    
+    public void setStatus(boolean status) {
+        this.mStatus = status;
+    }
+    
+    public boolean getStatus() {
+        return this.mStatus;
+    }
+    
     public void setFrmData(String uname, String pass) {
         this.mFormUsername = uname;
         this.mFormPasswd = pass;

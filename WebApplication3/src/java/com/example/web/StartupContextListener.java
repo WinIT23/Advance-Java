@@ -31,8 +31,9 @@ public class StartupContextListener implements ServletContextListener {
         String dBUrl = sce.getServletContext().getInitParameter("db_url");
         String dBUname = sce.getServletContext().getInitParameter("db_name");
         String dBPass = sce.getServletContext().getInitParameter("db_pass");
+        String tabName = sce.getServletContext().getInitParameter("tab_name");
         
-        myConn = new MyConnection(dBUrl, dBUname, dBPass); 
+        myConn = new MyConnection(dBUrl, dBUname, dBPass, tabName); 
         sce.getServletContext().setAttribute("my_con", myConn);
     }
 

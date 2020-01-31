@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.example.model.MyConnection"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,9 +20,12 @@
                 out.println("<p>" + s.getId() + "</p>");
                 String uname = (String) s.getAttribute("user_name");
                 s.setAttribute("login", Boolean.FALSE);
+                MyConnection myCon = (MyConnection) getServletContext().getAttribute("my_con");
+                myCon.setStatus("D");
                 s.invalidate();
                 out.print(" " + uname);
                 out.println("<p>" + s.getId() + "</p>");
+                
             %>
             
             

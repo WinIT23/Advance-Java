@@ -48,7 +48,9 @@ public class SignupServlet extends HttpServlet {
             try {
                 
                 MyConnection myCon = (MyConnection) getServletContext().getAttribute("my_con");
-                PreparedStatement myPst = myCon.getConnection().prepareStatement("INSERT INTO tab VALUES(?, ?);");
+                String tabName = getServletContext().getInitParameter("tab_name");
+                
+                PreparedStatement myPst = myCon.getConnection().prepareStatement("INSERT INTO " + tabName + " VALUES(?, ?, 'D');");
 
                 myPst.setString(1, uname);
                 myPst.setString(2, passwd);
