@@ -48,16 +48,17 @@ public class TestFilter implements Filter {
             //change states
             //MyConnection myConn = (MyConnection)fc.getServletContext().getAttribute("my_con");
             
-            
             if(authorize) {
                 fc.getServletContext().log("Username : " + fc.getServletContext().getAttribute("user_name").toString());
                 chain.doFilter(request, response);
             } else if (fc != null) {
                 fc.getServletContext().log("Redirection the HACKERMAN.... : authorize : " + authorize);
+                // try redirecting on index... its more useful that way.
                 fc.getServletContext().getRequestDispatcher("/hackerman.jsp").forward(request, response);
             }
-        }//-------------------------------------
+        }
         
+        // Old approach--------
         /*HttpSession session = req.getSession(false);
         
         if(session != null) {

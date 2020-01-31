@@ -5,7 +5,6 @@ package com.example.web;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +13,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import com.example.model.MyConnection;
 
-
 /**
  * Web application lifecycle listener.
  *
@@ -22,25 +20,25 @@ import com.example.model.MyConnection;
  */
 @WebListener()
 public class StartupContextListener implements ServletContextListener {
-    
-    private MyConnection myConn; 
-    
+
+    private MyConnection myConn;
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        
+
         String dBUrl = sce.getServletContext().getInitParameter("db_url");
         String dBUname = sce.getServletContext().getInitParameter("db_name");
         String dBPass = sce.getServletContext().getInitParameter("db_pass");
         String tabName = sce.getServletContext().getInitParameter("tab_name");
-        
-        myConn = new MyConnection(dBUrl, dBUname, dBPass, tabName); 
+
+        myConn = new MyConnection(dBUrl, dBUname, dBPass, tabName);
         sce.getServletContext().setAttribute("my_con", myConn);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         try {
-            myConn.closeConnction(); 
+            myConn.closeConnction();
         } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(StartupContextListener.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,7 +5,6 @@
  */
 package com.example.model;
 
-
 /**
  *
  * @author Win_It
@@ -56,19 +55,18 @@ public class User {
     public String getName() {
         return this.mDBUsername;
     }
-    
+
     public void setStatus(boolean status) {
         this.mStatus = status;
     }
-    
+
     public boolean getStatus() {
         return this.mStatus;
     }
-    
+
     public void setFrmData(String uname, String pass) {
         this.mFormUsername = uname;
         this.mFormPasswd = pass;
     }
-    
-    
+
 }

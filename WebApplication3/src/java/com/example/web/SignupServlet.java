@@ -5,7 +5,6 @@ package com.example.web;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import com.example.model.MyConnection;
@@ -15,14 +14,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
 
 /**
  *
  * @author Win_It
  */
-
-
 public class SignupServlet extends HttpServlet {
 
     /**
@@ -37,7 +33,7 @@ public class SignupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
@@ -46,10 +42,10 @@ public class SignupServlet extends HttpServlet {
 
             //Add data to mysql
             try {
-                
+
                 MyConnection myCon = (MyConnection) getServletContext().getAttribute("my_con");
                 String tabName = getServletContext().getInitParameter("tab_name");
-                
+
                 PreparedStatement myPst = myCon.getConnection().prepareStatement("INSERT INTO " + tabName + " VALUES(?, ?, 'D');");
 
                 myPst.setString(1, uname);

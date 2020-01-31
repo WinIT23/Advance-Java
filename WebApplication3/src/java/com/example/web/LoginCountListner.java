@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSessionListener;
 public class LoginCountListner implements HttpSessionListener {
 
     private int mCount;
-    
+
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         mCount++;
@@ -29,7 +29,7 @@ public class LoginCountListner implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
-        if(session.getAttribute("login") != null){
+        if (session.getAttribute("login") != null) {
             mCount--;
             session.getServletContext().log("" + mCount);
         }//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

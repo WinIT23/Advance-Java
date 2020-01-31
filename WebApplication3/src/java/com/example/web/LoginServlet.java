@@ -5,7 +5,6 @@ package com.example.web;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -28,7 +27,7 @@ public class LoginServlet extends HttpServlet {
     private MyConnection myCon;
     private String tabName;
     private PreparedStatement myPst;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,37 +47,37 @@ public class LoginServlet extends HttpServlet {
             String pass = request.getParameter("password");
             String rMe = request.getParameter("remember"); // for check box of remember me...
             // if checked response.addCookie( for uname and pass);
-            
-            if(rMe != null) {
+
+            if (rMe != null) {
                 // Username Cookie
                 Cookie cName = new Cookie("c_uname", uname);
                 cName.setMaxAge(Integer.MAX_VALUE);
                 response.addCookie(cName);
-                
+
                 // Password Cookie
                 Cookie cPass = new Cookie("c_pass", pass);
                 cPass.setMaxAge(Integer.MAX_VALUE);
                 response.addCookie(cPass);
             }
-            
-            try {    
+
+            try {
                 HttpSession s = request.getSession();
                 s.setAttribute("login", Boolean.FALSE);
-                
+
                 // set data from userinput to user-Object
                 myCon.getUserInstance().setFrmData(uname, pass);
-                
+
                 // set values for arguments in quary
                 myPst.setString(1, uname);
                 myPst.setString(2, pass);
 
                 // Execute Quary and store result-set
                 ResultSet rs = myPst.executeQuery();
-                
+
                 boolean hasUser = false;
                 while (rs.next()) {
                     myCon.getUserInstance().setDBData(rs.getString("uname"), rs.getString("passwd"), rs.getString("status"));
-                    
+
                     if (myCon.getUserInstance().passCheck()) {
                         getServletContext().setAttribute("user_name", uname);
                         s.setAttribute("login", Boolean.TRUE);
@@ -86,14 +85,14 @@ public class LoginServlet extends HttpServlet {
                         myCon.setStatus("A");
                         request.getRequestDispatcher("welcome.jsp").forward(request, response);
                         hasUser = true;
-                    } 
-                }
-                if(!hasUser){
-                        String err = "Invalid Username or Password";
-                        getServletContext().setAttribute("passwd_msg", err);
-                        response.sendRedirect("index.jsp");
-                        //request.getRequestDispatcher("index.jsp").include(request, response);
                     }
+                }
+                if (!hasUser) {
+                    String err = "Invalid Username or Password";
+                    getServletContext().setAttribute("passwd_msg", err);
+                    response.sendRedirect("index.jsp");
+                    //request.getRequestDispatcher("index.jsp").include(request, response);
+                }
             } catch (IOException | SQLException | ServletException ex) {
                 Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -138,7 +137,7 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
     @Override
     public void init() throws ServletException {
         myCon = (MyConnection) getServletContext().getAttribute("my_con");
@@ -148,6 +147,6 @@ public class LoginServlet extends HttpServlet {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
+
     }
 }
