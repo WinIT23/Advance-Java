@@ -53,7 +53,7 @@ public class MyConnection {
         return this.myConnection;
     }
 
-    public void setStatus(String status) throws SQLException {
+    public void setStatus(String status) throws SQLException, NullPointerException{
 
         // Query for getting status of user from database
         PreparedStatement pStm = myConnection.prepareStatement(

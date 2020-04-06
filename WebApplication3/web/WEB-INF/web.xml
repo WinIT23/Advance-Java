@@ -43,7 +43,7 @@
     <filter-mapping>
         <filter-name>TestFilter</filter-name>
         <!--<servlet-name>LoginServlet</servlet-name>-->
-        <url-pattern>/*Se</url-pattern>
+        <url-pattern>/*Servlet</url-pattern>
     </filter-mapping>
     
     <session-config>

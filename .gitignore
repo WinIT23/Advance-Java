@@ -9,3 +9,8 @@
 /WebApplication3/build/
 /WebApplication3/dist/
 /SignupMVC/nbproject/private/
+*.class
+temp/XMLRead.class
+temp/XMLReadDemo.class
+/JavaUseBeans/nbproject/private/
+/JavaUseBeans/build/

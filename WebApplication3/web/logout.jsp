@@ -20,7 +20,9 @@
                 out.println("<p>" + s.getId() + "</p>");
                 String uname = (String) s.getAttribute("user_name");
                 s.setAttribute("login", Boolean.FALSE);
-                ((MyConnection) getServletContext().getAttribute("my_con")).setStatus("D");
+                try {
+                    ((MyConnection) getServletContext().getAttribute("my_con")).setStatus("D");
+                } catch(Exception e){}
                 s.invalidate();
                 out.print(" " + uname);
                 out.println("<p>" + s.getId() + "</p>");

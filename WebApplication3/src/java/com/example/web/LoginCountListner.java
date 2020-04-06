@@ -19,11 +19,12 @@ import javax.servlet.http.HttpSessionListener;
 public class LoginCountListner implements HttpSessionListener {
 
     private int mCount;
-
+    
     @Override
     public void sessionCreated(HttpSessionEvent se) {
+        HttpSession session = se.getSession();
         mCount++;
-        se.getSession().getServletContext().log("" + mCount);
+        session.getServletContext().log("" + mCount);
     }
 
     @Override
